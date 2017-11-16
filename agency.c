@@ -10,48 +10,72 @@
 
 int main(void) {
             
-    /* Our process ID and Session ID */
+    /* declare child process variables */
     pid_t pid, sid;
                     
-    /* Fork off the parent process */
+    /* initialize child process PID
+     * by forking the child process
+     * from the parent process */
     pid = fork();
+
+    /* if PID creation fails
+     * kill child process */
     if (pid < 0) {
         exit(EXIT_FAILURE);
     }
                                     
-    /* If we got a good PID, then
-     * we can exit the parent process. */
+    /* If PID creation succeeds,
+     * exit the parent process. */
     if (pid > 0) {
         exit(EXIT_SUCCESS);
     }
     
-    /* Change the file mode mask */
+    /* Change the file mode mask 
+     * for the child process
+     * so that that system files
+     * and daemon-generated data
+     * are accessible to daemon process */
     umask(0);                                                        
     
-    /* Open any logs here */
+    /* Optional logging facilities */
+
+    
+
     /* Create a new SID for the child process */
     sid = setsid();
+    
+    /* If SID creation fails,
+     * kill child process */
     if (sid < 0) {
-        /* Log the failure */
         exit(EXIT_FAILURE);
     }
     
-    /* Change the current working directory */
+    /* Change the current working directory 
+     * if cd / fails,
+     * kill child process */
     if ((chdir("/")) < 0) {
-        /* Log the failure */
         exit(EXIT_FAILURE);
     }
     
-    /* Close out the standard file descriptors */
+    /* Close out the standard file descriptors
+     * to prevent users from directly interacting
+     * with daemon through a terminal.
+     * This can be classified in other settings as a security measure.
+     * doesn't necessarily protect from causal user interaction.*/
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
     
-    /* Daemon-specific initialization goes here */                                                                                                
-    /* The Big Loop */
+    /* Daemon-specific initialization*/
+
+    /* The 'infinite' Big Loop */
     while (1) {
-        /* Do some task here ... */
-        sleep(30); /* wait 30 seconds */
+
+        /* Code for Daemon task ... */
+
+        sleep(30); 
     }
+
+    /* kill daemon */
     exit(EXIT_SUCCESS);
 }
