@@ -1,0 +1,14 @@
+echo "" >> mySystem.txt;
+echo "HARDWARE" >> mySystem.txt;
+echo "" >> mySystem.txt;
+lscpu >> mySystem.txt;
+echo "" >> mySystem.txt;
+echo "HARD DISK PARTITIONING" >> mySystem.txt;
+echo "" >> mySystem.txt;
+lsblk >> mySystem.txt;
+echo "" >> mySystem.txt;
+echo "OPERATING SYSTEM" >> mySystem.txt;
+echo "" >> mySystem.txt;
+uname -a >> mySystem.txt;
+cat /etc/*release >> mySystem.txt;
+echo "" >> mySystem.txt;
